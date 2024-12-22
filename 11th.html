@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anniversary Surprise</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ffd7dd, #ffd3e9);
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        h1 {
+            color: #303126;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .message {
+            font-size: 1.5em;
+            margin: 20px 0;
+        }
+        .login-form {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            width: 300px;
+            margin: 0 auto;
+        }
+        input {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: none;
+            font-size: 1em;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #FF69B4;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #FF1493;
+        }
+        .quiz {
+            display: none;
+            margin-top: 30px;
+        }
+        .quiz-item {
+            margin: 20px;
+        }
+        .quiz-item input {
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 10px;
+            border: none;
+            margin-top: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+        .error-message {
+            color: #50002f;
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        .link {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: #FF69B4;
+        }
+        .link a {
+            color: #FF1493;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Happy 11th Monthsary, Mahal!</h1>
+
+    <!-- Login Form -->
+    <div class="login-form">
+        <input type="text" id="name" placeholder="Enter your name" required>
+        <input type="date" id="meetingDate" placeholder="First date" required>
+        <button onclick="startJourney()">Enter</button>
+        <div id="errorMessage" class="error-message hidden">Sino yang ka monthsary mo, ha?</div>
+    </div>
+
+    <!-- First Message -->
+    <div id="firstMessage" class="message hidden">
+        <p>Hiii my darling <span id="userName"></span>, still can't believe that ur mine ehe</p>
+        <p>1 year na tayo next month^^ pls dont ever leave me mahal ah, iloveyousomuchhh!!!</p>
+    </div>
+
+    <!-- Quiz Game -->
+    <div id="quiz" class="quiz">
+        <h2>Let's Play a Quiz!</h2>
+        <div class="quiz-item">
+            <p>1. What's my favorite color?</p>
+            <input type="text" id="question1" placeholder="Enter answer">
+        </div>
+        <div class="quiz-item">
+            <p>2. What's our future daughter's name?</p>
+            <input type="text" id="question2" placeholder="Enter answer">
+        </div>
+        <div class="quiz-item">
+            <p>3. What did you like about me?</p>
+            <input type="text" id="question3" placeholder="Enter answer">
+        </div>
+        <button onclick="submitQuiz()">Submit</button>
+    </div>
+
+    <!-- Thank You Message -->
+    <div id="thankYouMessage" class="message hidden">
+        <p>Thank you for existing, my darling <span id="userName2"></span>. You are forever loved by me<3</p>
+    </div>
+
+    <!-- Redirect Link -->
+    <div id="redirectLink" class="link hidden">
+        <p>Click <a href="https://app.sane.fyi/s/1cb57a7e-c074-11ef-a0c5-e3a5ab9391b8?t=XsGClfs1lEO9Db7aesHQ&utm_source=share-menu&utm_medium=web" target="_blank">here</a> for something special! 💖</p>
+    </div>
+
+    <script>
+        function startJourney() {
+            // Get user data
+            var name = document.getElementById("name").value;
+            var meetingDate = document.getElementById("meetingDate").value;
+            var correctDate = "2024-01-23";  // Correct date format: YYYY-MM-DD
+
+            if (name && meetingDate === correctDate) {
+                // Hide login form
+                document.querySelector('.login-form').style.display = 'none';
+
+                // Show first message
+                document.getElementById("firstMessage").classList.remove("hidden");
+                document.getElementById("userName").innerText = name;
+
+                // Show the quiz after a small delay
+                setTimeout(function() {
+                    document.getElementById("quiz").style.display = 'block'; // Make quiz visible
+                }, 1000); // Delay of 1 second for smooth transition
+            } else {
+                // Show error message if the date is incorrect
+                document.getElementById("errorMessage").classList.remove("hidden");
+            }
+        }
+
+        function submitQuiz() {
+            // Get answers from the quiz
+            var answer1 = document.getElementById("question1").value.toLowerCase();
+            var answer2 = document.getElementById("question2").value.toLowerCase();
+            var answer3 = document.getElementById("question3").value.toLowerCase();
+
+            // Correct answers
+            var correctAnswers = {
+                color: "pink",
+                daughterName: "xia"
+            };
+
+            // Check the answers
+            var score = 0;
+            if (answer1 === correctAnswers.color) score++;
+            if (answer2 === correctAnswers.daughterName) score++;
+            if (answer3.length > 0) score++; // Any answer is correct for question 3
+
+            // Show thank you message
+            document.getElementById("thankYouMessage").classList.remove("hidden");
+            document.getElementById("userName2").innerText = document.getElementById("name").value;
+
+            // Hide the quiz after submission
+            document.getElementById("quiz").style.display = 'none';
+
+            // Show the redirect link
+            document.getElementById("redirectLink").classList.remove("hidden");
+
+            // Optional: Show the score or feedback
+            alert("You got " + score + "/3 correct! I love you my shogarette shogarplam!!");
+        }
+    </script>
+</body>
+</html>
